@@ -40,9 +40,9 @@ const NavBar = ({ sideBarOpen, onToggle }) => {
           </button>
           <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 px-2 py-1 rounded-md">
             <img
-              src=""
+              src="https://picsum.photos/200/300"
               alt="profile"
-              className="w-8 h-8 rounded-full object-cover"
+              className="w-8 h-8 rounded-full object-cover border-2 border-gray-400"
             />
             <div className="hidden md:block leading-tight">
               <p className="text-sm font-medium">Admin</p>

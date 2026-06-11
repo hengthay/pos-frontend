@@ -18,7 +18,9 @@ const DashboardLayout = () => {
       >
         <NavBar sideBarOpen={isOpen} onToggle={handleOpenMenu}/>
         <main className="flex-1 min-h-screen overflow-y-auto pt-20 px-4">
-          <Outlet />
+          <Outlet context={{ 
+            isOpen
+           }}/>
         </main>
       </div>
     </div>

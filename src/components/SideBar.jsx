@@ -7,11 +7,14 @@ import { FiLogOut } from 'react-icons/fi';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { RiExpandUpDownLine } from "react-icons/ri";
 import Swal from 'sweetalert2';
+import { useDispatch } from 'react-redux';
+import { logoutUser } from '../feature/auth/authSlice';
 
 const SideBar = ({ isOpen, onClose }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [showLogout, setShowLogout] = useState(false);
+  const dispatch = useDispatch();
 
   const handleToggleLogout = () => setShowLogout(prev => !prev);
 
@@ -40,14 +43,21 @@ const SideBar = ({ isOpen, onClose }) => {
 
   const handleLogout = async () => {
     try {
+
+      await dispatch(logoutUser()).unwrap();
+
       Swal.fire({
         title: "Successfully",
         text: "Your logout is successfully!",
         icon: 'success',
-        timer: 1000,
+        timer: 2000,
       });
 
-      navigate("/login");
+      const timeoutId = setTimeout(() => {
+        navigate("/login");
+      }, 3000);
+
+      return () => clearTimeout(timeoutId);
     } catch (error) {
       console.error(error);
       Swal.fire({
@@ -184,7 +194,11 @@ const SideBar = ({ isOpen, onClose }) => {
             <div className="flex relative justify-between items-center w-full shadow-sm bg-white rounded-lg p-1.5">
               {isOpen && (
                 <div className='flex gap-x-2 gap-y-1 text-sm'>
-                  <div className="w-10 h-10 bg-gray-500 rounded-full" />
+                  <img
+                    src="https://picsum.photos/200/300"
+                    alt="profile"
+                    className="w-8 h-8 rounded-full object-cover"
+                  />
                   <div className="transition-all duration-300 origin-left opacity-100 scale-100">
                     <h4 className="font-semibold">Admin</h4>
                     <p className="text-xs text-gray-500">Administrator</p>
@@ -197,10 +211,14 @@ const SideBar = ({ isOpen, onClose }) => {
               </div>
 
               {showLogout && (
-                <div className={`absolute w-full bg-white p-2 rounded-lg shadow-md z-50 space-y-2 ${isOpen ? '-top-10 -right-45' : '-top-25 -right-50 min-w-50'}`}>
+                <div className={`absolute w-full bg-white p-2 rounded-lg shadow-md z-50 space-y-2 ${isOpen ? '-top-13 -right-47' : '-top-25 -right-50 min-w-50'}`}>
                   {!isOpen && (
-                    <div className='flex gap-x-2 gap-y-1'>
-                      <div className="w-10 h-10 bg-gray-500 rounded-full" />
+                    <div className='flex items-center gap-x-2 gap-y-1'>
+                      <img
+                          src="https://picsum.photos/200/300"
+                          alt="profile"
+                          className="w-8 h-8 rounded-full object-cover border-2 border-gray-400"
+                        />
                       <div className="transition-all duration-300 origin-left">
                         <h4 className="font-semibold">Admin</h4>
                         <p className="text-sm text-gray-500">Administrator</p>
