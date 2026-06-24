@@ -1,20 +1,24 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { 
-  FaBox, FaChartBar, FaChartLine, FaHome, FaList, 
+  FaBox, FaChartBar, FaChartLine, FaList, 
   FaMoneyBill, FaShoppingBag, FaShoppingCart, FaTruck, FaUsers 
 } from 'react-icons/fa';
 import { FiLogOut } from 'react-icons/fi';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { RiExpandUpDownLine } from "react-icons/ri";
 import Swal from 'sweetalert2';
-import { useDispatch } from 'react-redux';
-import { logoutUser } from '../feature/auth/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutUser, selectUser } from '../feature/auth/authSlice';
 
 const SideBar = ({ isOpen, onClose }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [showLogout, setShowLogout] = useState(false);
   const dispatch = useDispatch();
+
+  // Get current logged user
+  const user = useSelector(selectUser);
+  const isAdmin = user?.user?.role === "admin";
 
   const handleToggleLogout = () => setShowLogout(prev => !prev);
 
@@ -26,19 +30,18 @@ const SideBar = ({ isOpen, onClose }) => {
   }, [isOpen]);
 
   const generalItems = [
-    { id: 1, iconName: FaHome, label: "Home", pathName: "/" },
-    { id: 2, iconName: FaShoppingCart, label: "Sale Order", pathName: "/sale-orders" },
-    { id: 3, iconName: FaBox, label: "Inventory", pathName: "/inventories" },
-    { id: 4, iconName: FaList, label: "Category", pathName: "/categories" },
-    { id: 5, iconName: FaUsers, label: "Customers", pathName: "/customers" },
+    { id: 1, iconName: FaShoppingCart, label: "Sale Order", pathName: "/sale-orders" },
+    { id: 2, iconName: FaBox, label: "Inventory", pathName: "/inventories" },
+    { id: 3, iconName: FaList, label: "Category", pathName: "/categories" },
+    { id: 4, iconName: FaUsers, label: "Customers", pathName: "/customers" },
   ];
 
   const supportItems = [
-    { id: 6, iconName: FaChartLine, label: "Total Sale", pathName: "/total-sales" },
-    { id: 7, iconName: FaShoppingBag, label: "Purchase", pathName: "/purchases" },
-    { id: 8, iconName: FaTruck, label: "Supplier", pathName: "/suppliers" },
-    { id: 9, iconName: FaMoneyBill, label: "Expenses", pathName: "/expenses" },
-    { id: 10, iconName: FaChartBar, label: "Reports", pathName: "/reports" },
+    { id: 5, iconName: FaChartLine, label: "Total Sale", pathName: "/total-sales" },
+    { id: 6, iconName: FaShoppingBag, label: "Purchase", pathName: "/purchases" },
+    { id: 7, iconName: FaTruck, label: "Supplier", pathName: "/suppliers" },
+    { id: 8, iconName: FaMoneyBill, label: "Expenses", pathName: "/expenses" },
+    { id: 9, iconName: FaChartBar, label: "Reports", pathName: "/reports" },
   ];
 
   const handleLogout = async () => {
@@ -101,7 +104,7 @@ const SideBar = ({ isOpen, onClose }) => {
             />
 
             <span
-              className={`whitespace-nowrap transition-all duration-200
+              className={`whitespace-nowrap transition-all duration-200 text-sm
                 ${
                   isOpen
                     ? "opacity-100"
@@ -163,7 +166,7 @@ const SideBar = ({ isOpen, onClose }) => {
               )}
             </div>
             
-            {isOpen && <hr className='text-gray-400' />}
+            {isOpen && <hr className='text-gray-300' />}
             {/* Menu */}
             <div className="md:space-y-6 space-y-2">
               <div>
@@ -197,11 +200,11 @@ const SideBar = ({ isOpen, onClose }) => {
                   <img
                     src="https://picsum.photos/200/300"
                     alt="profile"
-                    className="w-8 h-8 rounded-full object-cover"
+                    className="w-8 h-8 rounded-full object-cover border-2 border-gray-400"
                   />
                   <div className="transition-all duration-300 origin-left opacity-100 scale-100">
-                    <h4 className="font-semibold">Admin</h4>
-                    <p className="text-xs text-gray-500">Administrator</p>
+                    <h4 className="font-semibold">{user?.user?.name}</h4>
+                    <p className="text-xs text-gray-500">{isAdmin ? "Administrator" : "Cashier"}</p>
                   </div>
                 </div>
               )}
@@ -220,8 +223,8 @@ const SideBar = ({ isOpen, onClose }) => {
                           className="w-8 h-8 rounded-full object-cover border-2 border-gray-400"
                         />
                       <div className="transition-all duration-300 origin-left">
-                        <h4 className="font-semibold">Admin</h4>
-                        <p className="text-sm text-gray-500">Administrator</p>
+                        <h4 className="font-semibold">{user?.user?.name}</h4>
+                        <p className="text-xs text-gray-500">{isAdmin ? "Administrator" : "Cashier"}</p>
                       </div>
                     </div>
                   )}
@@ -241,7 +244,7 @@ const SideBar = ({ isOpen, onClose }) => {
           </div>
           
           {isOpen && (
-            <p className="text-xs text-slate-500 text-center opacity-100">&copy;{year} POS System.</p>
+            <p className="text-[10.5px] text-slate-500 text-center opacity-100">&copy;{year} POS System.</p>
           )}
         </div>
       </aside>
