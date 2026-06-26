@@ -3,6 +3,7 @@ import {
   FaBox, FaChartBar, FaChartLine, FaList, 
   FaMoneyBill, FaShoppingBag, FaShoppingCart, FaTruck, FaUsers 
 } from 'react-icons/fa';
+import { AiFillProduct } from "react-icons/ai";
 import { FiLogOut } from 'react-icons/fi';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { RiExpandUpDownLine } from "react-icons/ri";
@@ -30,18 +31,19 @@ const SideBar = ({ isOpen, onClose }) => {
   }, [isOpen]);
 
   const generalItems = [
-    { id: 1, iconName: FaShoppingCart, label: "Sale Order", pathName: "/sale-orders" },
-    { id: 2, iconName: FaBox, label: "Inventory", pathName: "/inventories" },
-    { id: 3, iconName: FaList, label: "Category", pathName: "/categories" },
-    { id: 4, iconName: FaUsers, label: "Customers", pathName: "/customers" },
+    { id: 1, iconName: FaShoppingCart, label: "Sale Order", pathName: "/" },
+    { id: 2, iconName: AiFillProduct, label: "Product", pathName: "/products"},
+    { id: 3, iconName: FaBox, label: "Inventory", pathName: "/inventories" },
+    { id: 4, iconName: FaList, label: "Category", pathName: "/categories" },
+    { id: 5, iconName: FaUsers, label: "Customers", pathName: "/customers" },
   ];
 
   const supportItems = [
-    { id: 5, iconName: FaChartLine, label: "Total Sale", pathName: "/total-sales" },
-    { id: 6, iconName: FaShoppingBag, label: "Purchase", pathName: "/purchases" },
-    { id: 7, iconName: FaTruck, label: "Supplier", pathName: "/suppliers" },
-    { id: 8, iconName: FaMoneyBill, label: "Expenses", pathName: "/expenses" },
-    { id: 9, iconName: FaChartBar, label: "Reports", pathName: "/reports" },
+    { id: 6, iconName: FaChartLine, label: "Total Sale", pathName: "/total-sales" },
+    { id: 7, iconName: FaShoppingBag, label: "Purchase", pathName: "/purchases" },
+    { id: 8, iconName: FaTruck, label: "Supplier", pathName: "/suppliers" },
+    { id: 9, iconName: FaMoneyBill, label: "Expenses", pathName: "/expenses" },
+    { id: 10, iconName: FaChartBar, label: "Reports", pathName: "/reports" },
   ];
 
   const handleLogout = async () => {
@@ -86,16 +88,16 @@ const SideBar = ({ isOpen, onClose }) => {
             to={item.pathName}
             className={`group relative flex items-center ${
               isOpen ? "justify-start gap-3 px-3" : "justify-center"
-            } py-2.5 rounded-xl transition-all duration-200
+            } py-2.5 rounded-sm transition-all duration-200
               ${
                 isActive
-                  ? "bg-blue-50 text-blue-600 font-medium"
-                  : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+                  ? "bg-blue-100 text-blue-600 font-medium"
+                  : "text-slate-600 hover:bg-slate-200 hover:text-slate-900"
               }
             `}
           >
             {isActive && (
-              <div className="absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-blue-500" />
+              <div className="absolute left-0 top-0 bottom-2 w-1 h-full rounded-r-full bg-blue-500" />
             )}
 
             <Icon

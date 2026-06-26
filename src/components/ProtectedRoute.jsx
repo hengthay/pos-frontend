@@ -9,7 +9,6 @@ const ProtectedRoute = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
   const user = useSelector(selectUser);
 
-
   useEffect(() => {
     if(!user) {
       setIsAuthenticated(false);

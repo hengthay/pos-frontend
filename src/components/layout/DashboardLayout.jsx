@@ -21,7 +21,7 @@ const DashboardLayout = () => {
         className={`w-full transition-all ease-in-out duration-300 ${isOpen ? "pl-60" : "pl-20"}`}
       >
         <NavBar sideBarOpen={isOpen} onToggle={handleOpenMenu} onToggleCartOpen={handleToggleCartOpen}/>
-        <main className="flex-1 min-h-screen overflow-y-auto pt-20 px-4">
+        <main className="flex-1 min-h-screen overflow-y-auto pt-20 px-2">
           <Outlet context={{ 
             isOpen,
             isCartOpen,

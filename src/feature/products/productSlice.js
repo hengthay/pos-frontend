@@ -117,7 +117,7 @@ export const deleteProduct = createAsyncThunk(
 
       if(res?.data?.data) return id;
 
-      if(res?.data?.data === 200 || res?.data?.data === 204) return id;
+      if(res?.status === 200 || res?.status === 204) return id;
 
       return thunkAPI.rejectWithValue("Unable to delete product!");
     } catch (error) {
@@ -133,7 +133,10 @@ const productSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
-
+    resetProductStatus: (state) => {
+      state.status = "idle";
+      state.statusDetail = "idle";
+    }
   }, 
   extraReducers: (builder) => {
     builder
@@ -217,6 +220,7 @@ const productSlice = createSlice({
 })
 
 export default productSlice.reducer;
+export const { resetProductStatus } = productSlice.actions;
 export const selectProducts = (state) => state.products.productsData;
 export const selectProductStatus = (state) => state.products.status;
 export const selectProductError = (state) => state.products.error;

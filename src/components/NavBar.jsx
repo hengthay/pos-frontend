@@ -30,7 +30,7 @@ const NavBar = ({ sideBarOpen, onToggle, onToggleCartOpen }) => {
         </div>
 
         <div
-          className={`hidden md:flex items-center bg-gray-100 rounded-lg px-3 py-1.5 ${sideBarOpen ? "w-100" : "w-160"}`}
+          className={`hidden lg:flex items-center bg-gray-100 rounded-lg px-3 py-1.5 ${sideBarOpen ? "w-100" : "w-160"}`}
         >
           <FaSearch className="text-gray-400 text-sm" />
           <input

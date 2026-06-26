@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchProducts, selectProductError, selectProducts, selectProductStatus } from '../feature/products/productSlice';
+import { fetchProducts, resetProductStatus, selectProductError, selectProducts, selectProductStatus } from '../feature/products/productSlice';
 import { TiShoppingCart } from "react-icons/ti";
 import { FaRegTrashCan } from "react-icons/fa6";
 import { FiMinus, FiPlus } from "react-icons/fi";
@@ -128,6 +128,7 @@ const SaleOrder = () => {
       await dispatch(createSale({ formData })).unwrap();
 
       console.log('FormData - ', formData);
+      dispatch(resetProductStatus());
 
       await Swal.fire({
         title: "CheckOut",
@@ -174,7 +175,7 @@ const SaleOrder = () => {
           </div>
           <hr className='w-full text-gray-300'/>
           <div className='w-full my-2'>
-            <div className='grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 md:gap-4 gap-2 leading-relaxed md:space-y-0 space-y-6'>
+            <div className='grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 md:gap-4 gap-2 leading-relaxed md:space-y-0 space-y-6'>
               {
                 products?.length > 0 && filteredProduct.length > 0 && (
                   filteredProduct.map((product) => (
@@ -302,7 +303,7 @@ const SaleOrder = () => {
               {
                 cartItems.length > 0 && (
                   <button 
-                    className='w-full flex justify-center items-center gap-1 md:py-2.5 py-1.5 bg-white border border-gray-300 text-gray-800 rounded-md font-semibold hover:bg-gray-200/80 transition shadow-md cursor-pointer text-sm'>
+                    className='w-full flex justify-center items-center gap-1 md:py-2.5 py-1.5 bg-white border border-gray-300 text-gray-800 rounded-md font-semibold hover:bg-gray-200/80 transition shadow-md cursor-pointer text-sm text-nowrap px-1'>
                     <p className="font-semibold text-gray-600">Discount %:</p>
                     <input
                       type="number"
