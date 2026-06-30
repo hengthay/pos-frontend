@@ -8,6 +8,10 @@ import SaleOrder from './pages/SaleOrder'
 import Category from './pages/Category'
 import CategoryCreate from './components/Category/CategoryCreate'
 import CategoryUpdate from './components/Category/CategoryUpdate'
+import Product from './pages/Product'
+import ProductCreate from "./components/Product/ProductCreate"
+import ProductUpdate from "./components/Product/ProductUpdate"
+import ProductDetail from "./components/Product/ProductDetail"
 
 const App = () => {
   return (
@@ -18,6 +22,10 @@ const App = () => {
           <Route path='/categories' element={<Category />}/>
           <Route path='/categories/create' element={<CategoryCreate />}/>
           <Route path='/categories/:id/edit' element={<CategoryUpdate />}/>
+          <Route path='/products' element={<Product />}/>
+          <Route path='/products/create' element={<ProductCreate />}/>
+          <Route path='/products/:id/edit' element={<ProductUpdate />}/>
+          <Route path='/products/:id/view' element={<ProductDetail />}/>
         </Route>
       </Route>
       <Route path='/login' element={<Login />}/>

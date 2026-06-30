@@ -1,114 +1,130 @@
-import React from 'react'
-import { BiCartAdd } from 'react-icons/bi'
-import { MdOutlineImageNotSupported } from "react-icons/md";
-import { useDispatch, useSelector } from 'react-redux';
-import { addItemToCart, resetCartItemStatus } from '../../feature/cartTemp/cartTempSlice';
+import { CiEdit, CiTrash } from 'react-icons/ci';
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { deleteProduct } from '../../feature/products/productSlice';
+import { GrView } from 'react-icons/gr';
 
 const ProductCard = ({ product }) => {
 
   const dispatch = useDispatch();
-  const isOutOfStock = product.stock_quantity === 0
-  
-  // Handle add to sale
-  const handleAddItemToSale = async () => {
+  const handleDelete = async (id) => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "This product will be permanently deleted!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#6b7280",
+      confirmButtonText: "Yes, delete it",
+      cancelButtonText: "Cancel",
+    });
+
+    if (!result.isConfirmed) return; // ❌ user canceled
     try {
-      
-      if(isOutOfStock) return;
-
-      // Add to cart
-      dispatch(addItemToCart({
-        product_id: product.id, 
-        product_name: product.product_name,
-        quantity: 1, 
-        unit_price: product.selling_price,
-        image_url: product.image_url
-      }))
+      await dispatch(deleteProduct(id)).unwrap();
 
       await Swal.fire({
-        title: "Added to cart",
-        text: "Item added to cart successfully.",
+        title: "Deleted",
+        text: "Product has been deleted successfully!",
         icon: "success",
-        timer: 1500
-      })
-      
-      dispatch(resetCartItemStatus());
+        timer: 1500,
+        showConfirmButton: false,
+      });
     } catch (error) {
-      await Swal.fire({
-        title: "Failed to add",
-        text: "Failed to add items to cart.",
-        icon: "error",
-        timer: 1500
-      })
       console.log(error);
+      Swal.fire({
+        title: "Failed",
+        text: "Your product could not be deleted.",
+        icon: "error",
+        timer: 1500,
+      });
     }
-  }
+  };
 
   return (
-    <div className='relative w-full flex flex-col flex-1 justify-start rounded-md shadow-sm hover:shadow-md border border-slate-200 md:space-y-2 space-y-1.5 group overflow-hidden'>
-      <div className='relative w-full md:h-40 h-60 overflow-hidden flex justify-center items-center'>
-        {product.image_url ? (
-          <img
-            src={`${import.meta.env.VITE_BASE_URL}/storage/${product.image_url}`}
-            alt={product.product_name}
-            className={`object-cover w-full h-full rounded-t-md transform ease-in-out duration-200 ${
-              isOutOfStock ? 'grayscale opacity-60' : 'group-hover:scale-110'
-            }`}
-          />
-        ) : (
-          <div className='flex flex-col justify-center items-center text-slate-500'>
-            <MdOutlineImageNotSupported size={20} />
-            <span className='text-xs'>No Image Available</span>
+    <tr 
+      key={product?.id}
+      className="border-b border-gray-100 hover:bg-gray-50 transition">
+      <td className="px-6 py-4">
+        <div className="flex items-center gap-4">
+          {
+            product?.image_url ? (
+              <img
+                src={`${import.meta.env.VITE_BASE_URL}/storage/${product?.image_url}`}
+                alt={product?.product_name}
+                className="w-14 h-14 rounded-lg object-cover border border-gray-300 shadow-sm"
+              />
+            ) : (
+              <p className='text-[11px] md:w-14 w-18 h-14 rounded-lg object-cover border border-gray-300 flex justify-center items-center shadow-sm'>No Image</p>
+            )
+          }
+
+          <div>
+            <h3 className="font-semibold text-gray-800">
+              {product?.product_name}
+            </h3>
+            <p className="text-sm text-gray-500">
+              {product?.description}
+            </p>
           </div>
-        )}
-
-        {isOutOfStock && (
-          <div className='absolute inset-0 bg-black/35 flex items-center justify-center'>
-            <span className='px-4 py-1.5 rounded-full bg-gray-500 text-white/80 text-sm font-semibold tracking-wide'>
-              OUT OF STOCK
-            </span>
-          </div>
-        )}
-      </div>
-
-      <div className='flex flex-col md:space-y-2.5 space-y-1.5 md:p-2 p-1.5 mt-2'>
-        <div className='space-y-1'>
-          <h1
-            className={`md:text-xl text-lg font-medium tracking-wide ${
-              isOutOfStock ? 'line-through text-slate-400' : 'text-black'
-            }`}
-          >
-            {product.product_name}
-          </h1>
-
-          <p className={`text-slate-500 text-sm text-wrap ${isOutOfStock ? 'opacity-70' : ''}`}>
-            {product.description}
-          </p>
-
-          <p className='text-slate-500 text-sm text-wrap'>
-            Available Stock: <span>{product.stock_quantity}</span>
-          </p>
         </div>
-
-        <p className='absolute top-2 right-2 py-1 px-2 text-white font-medium bg-blue-500 rounded-md text-sm tracking-wide'>
-          ${product.selling_price}
+      </td>
+      <td className="px-6 py-4 text-gray-700 font-medium text-sm">
+        {product?.product_code}
+      </td>
+      <td className="px-6 py-4">
+        <p className="max-w-20 rounded-full text-center bg-blue-100 px-3 py-1 text-xs font-medium text-blue-700">
+          {product?.category?.category_name}
         </p>
-
-        <button
-          onClick={handleAddItemToSale}
-          disabled={isOutOfStock}
-          className={`flex justify-center items-center md:gap-1.5 gap-1 md:p-2 p-1.5 font-medium rounded-md transition-all ease-in-out duration-300 group ${
-            isOutOfStock
-              ? 'bg-slate-200 text-slate-500 cursor-not-allowed'
-              : 'bg-blue-100 text-blue-500/80 hover:text-white hover:bg-blue-500 cursor-pointer'
+      </td>
+      <td className="px-6 py-4 font-semibold text-gray-800">
+        ${product?.selling_price}
+      </td>
+      <td className="px-6 py-4">
+        <p
+          className={`max-w-30 text-center rounded-full px-3 py-1 text-xs text-wrap font-semibold ${
+            product.stock_quantity === 0 ? "bg-red-100 text-red-700" :
+            product.stock_quantity <= 5
+              ? "bg-yellow-100 text-yellow-700"
+              : "bg-green-100 text-green-700"
           }`}
-          title='Add-Item'
         >
-          <BiCartAdd size={18} className='transform group-hover:scale-110' />
-          {isOutOfStock ? 'Unavailable' : 'Quick Add'}
-        </button>
-      </div>
-    </div>
+          {product.stock_quantity === 0 ? "Out Of Stock" : product.stock_quantity <= 5
+            ? `Low Stock (${product.stock_quantity})`
+            : `High Stock (${product.stock_quantity})`}
+        </p>
+      </td>
+
+      <td className="px-6 py-4">
+        <div className="flex items-center gap-2">
+          <Link
+            to={`/products/${product?.id}/edit`}
+            title="Edit Product"
+            className="p-2 rounded-lg border border-blue-200 text-blue-600 hover:bg-blue-50 transition cursor-pointer"
+          >
+            <CiEdit size={15} />
+          </Link>
+
+          <Link
+            to={`/products/${product?.id}/view`}
+            title="View Product"
+            className="p-2 rounded-lg border border-blue-200 text-amber-600 hover:bg-amber-50 transition cursor-pointer"
+          >
+            <GrView size={15} />
+          </Link>
+
+          <button
+            type="button"
+            onClick={() => handleDelete(product?.id)}
+            title="Delete Product"
+            className="p-2 rounded-lg border border-red-200 text-red-600 hover:bg-red-50 transition cursor-pointer"
+          >
+            <CiTrash size={15} />
+          </button>
+        </div>
+      </td>
+    </tr>
   )
 }
 

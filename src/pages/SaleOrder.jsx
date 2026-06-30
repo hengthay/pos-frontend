@@ -15,6 +15,7 @@ import { clearCart, selectCartDiscount, selectCartError, selectCartItems, select
 import CartItemCard from '../components/carts/CartItemCard';
 import { createSale } from '../feature/sales/saleSlice';
 import Swal from 'sweetalert2';
+import ProductForSale from '../components/Product/ProductForSale';
 
 const SaleOrder = () => {
 
@@ -82,13 +83,12 @@ const SaleOrder = () => {
   const finalDiscount = Number(form.discount / 100 || 0) * subtotal;
   const finalTotal = Math.max(0, Number(subtotal || 0) + Number(tax || 0) - finalDiscount);
 
-  const displayPaidAmount =
-    form.payment_status === "paid"
-      ? finalTotal
-      : form.payment_status === "unpaid"
-      ? 0
-      : Number(form.paid_amount || 0);
-
+ const displayPaidAmount =
+  form.payment_status === "paid"
+    ? finalTotal
+    : form.payment_status === "unpaid"
+    ? 0
+    : Number(form.paid_amount || 0);
   // Handle on checkout sale
   const handleCheckOut = async () => {
     if(cartItems.length === 0) {
@@ -114,7 +114,13 @@ const SaleOrder = () => {
       formData.append("total", Number(total));
       formData.append("sale_date", new Date().toISOString().split("T")[0]);
       formData.append("payment_status", form.payment_status);
-      formData.append("paid_amount", finalTotal);
+      formData.append("paid_amount",
+        form.payment_status === "paid"
+          ? finalTotal
+          : form.payment_status === "unpaid"
+          ? 0
+          : Number(form.paid_amount || 0)
+      );
       
 
       if(cartItems.length > 0) {
@@ -139,6 +145,19 @@ const SaleOrder = () => {
 
       // Clear cart
       dispatch(clearCart());
+      
+      // Reset form
+      setForm({
+        customer_id: null,
+        subtotal: 0,
+        total: 0,
+        tax: 0,
+        discount: 0,
+        paid_amount: 0,
+        payment_status: "unpaid",
+        sale_date: new Date().toISOString().split("T")[0],
+        items: []
+      });
     } catch (error) {
       await Swal.fire({
         title: "CheckOut",
@@ -179,7 +198,7 @@ const SaleOrder = () => {
               {
                 products?.length > 0 && filteredProduct.length > 0 && (
                   filteredProduct.map((product) => (
-                    <ProductCard key={product.id} product={product}/>
+                    <ProductForSale key={product.id} product={product}/>
                   ))
                 )
               }
@@ -258,9 +277,16 @@ const SaleOrder = () => {
                   value={form.payment_status}
                   onChange={(e) => {
                     const status = e.target.value;
+
                     setForm((prev) => ({
                       ...prev,
                       payment_status: status,
+                      paid_amount:
+                        status === "paid"
+                          ? finalTotal
+                          : status === "unpaid"
+                          ? 0
+                          : prev.paid_amount,
                     }));
                   }}
                   className='w-full rounded-md border border-gray-300 px-3 py-2 outline-none focus:border-blue-500 text-sm'
@@ -401,9 +427,16 @@ const SaleOrder = () => {
                         value={form.payment_status}
                         onChange={(e) => {
                           const status = e.target.value;
+
                           setForm((prev) => ({
                             ...prev,
                             payment_status: status,
+                            paid_amount:
+                              status === "paid"
+                                ? finalTotal
+                                : status === "unpaid"
+                                ? 0
+                                : prev.paid_amount,
                           }));
                         }}
                         className='w-full rounded-md border border-gray-300 px-3 py-2 outline-none focus:border-blue-500 text-sm'
