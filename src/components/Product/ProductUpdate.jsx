@@ -245,7 +245,7 @@ const ProductUpdate = () => {
                   className="w-full border border-gray-300 rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-gray-200">
                   <option value="">Select Type</option>
                   <option value="New Rice">New Rice</option>
-                  <option value="New Rice">Old Rice</option>
+                  <option value="Old Rice">Old Rice</option>
                 </select>
               </div>
 

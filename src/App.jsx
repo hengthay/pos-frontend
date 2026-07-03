@@ -12,6 +12,8 @@ import Product from './pages/Product'
 import ProductCreate from "./components/Product/ProductCreate"
 import ProductUpdate from "./components/Product/ProductUpdate"
 import ProductDetail from "./components/Product/ProductDetail"
+import InventoryTransaction from './pages/InventoryTransaction'
+import InventoryTransactionDetail from './components/InventoryTransaction/InventoryTransactionDetail'
 
 const App = () => {
   return (
@@ -26,6 +28,8 @@ const App = () => {
           <Route path='/products/create' element={<ProductCreate />}/>
           <Route path='/products/:id/edit' element={<ProductUpdate />}/>
           <Route path='/products/:id/view' element={<ProductDetail />}/>
+          <Route path='/inventories-transaction' element={<InventoryTransaction />}/>
+          <Route path='/inventories-transaction/:id/view' element={<InventoryTransactionDetail />}/>
         </Route>
       </Route>
       <Route path='/login' element={<Login />}/>

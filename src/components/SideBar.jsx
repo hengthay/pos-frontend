@@ -33,7 +33,7 @@ const SideBar = ({ isOpen, onClose }) => {
   const generalItems = [
     { id: 1, iconName: FaShoppingCart, label: "Sale Order", pathName: "/" },
     { id: 2, iconName: AiFillProduct, label: "Product", pathName: "/products"},
-    { id: 3, iconName: FaBox, label: "Inventory", pathName: "/inventories" },
+    { id: 3, iconName: FaBox, label: "Inventory", pathName: "/inventories-transaction" },
     { id: 4, iconName: FaList, label: "Category", pathName: "/categories" },
     { id: 5, iconName: FaUsers, label: "Customers", pathName: "/customers" },
   ];
