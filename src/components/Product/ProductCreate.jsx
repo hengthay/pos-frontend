@@ -188,6 +188,7 @@ const ProductCreate = () => {
                   type="number"
                   id="stock_quantity"
                   name="stock_quantity"
+                  value={form.stock_quantity}
                   onChange={handleOnChange}
                   required
                   placeholder="e.g. 2 or 3"

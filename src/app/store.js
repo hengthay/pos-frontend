@@ -5,6 +5,7 @@ import productReducer from "../feature/products/productSlice";
 import cartReducer from "../feature/cartTemp/cartTempSlice";
 import categoryReducer from "../feature/categories/categorySlice";
 import inventoryReducer from "../feature/inventories/inventorySlice";
+import customerReducer from "../feature/customers/customerSlice";
 
 const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ const store = configureStore({
     products: productReducer,
     carts: cartReducer,
     categories: categoryReducer,
+    customers: customerReducer,
     inventories: inventoryReducer,
   }
 });

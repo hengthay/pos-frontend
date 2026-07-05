@@ -14,6 +14,10 @@ import ProductUpdate from "./components/Product/ProductUpdate"
 import ProductDetail from "./components/Product/ProductDetail"
 import InventoryTransaction from './pages/InventoryTransaction'
 import InventoryTransactionDetail from './components/InventoryTransaction/InventoryTransactionDetail'
+import Customer from './pages/Customer'
+import CustomerCreate from './components/Customer/CustomerCreate'
+import CustomerUpdate from './components/Customer/CustomerUpdate'
+import CustomerDetail from './components/Customer/CustomerDetail'
 
 const App = () => {
   return (
@@ -30,6 +34,10 @@ const App = () => {
           <Route path='/products/:id/view' element={<ProductDetail />}/>
           <Route path='/inventories-transaction' element={<InventoryTransaction />}/>
           <Route path='/inventories-transaction/:id/view' element={<InventoryTransactionDetail />}/>
+          <Route path='/customers' element={<Customer />}/>
+          <Route path='/customers/create' element={<CustomerCreate />}/>
+          <Route path='/customers/:id/edit' element={<CustomerUpdate />}/>
+          <Route path='/customers/:id/view' element={<CustomerDetail />}/>
         </Route>
       </Route>
       <Route path='/login' element={<Login />}/>
