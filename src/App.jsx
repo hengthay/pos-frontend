@@ -18,6 +18,10 @@ import Customer from './pages/Customer'
 import CustomerCreate from './components/Customer/CustomerCreate'
 import CustomerUpdate from './components/Customer/CustomerUpdate'
 import CustomerDetail from './components/Customer/CustomerDetail'
+import Sale from './pages/Sale'
+import SaleUpdate from './components/Sale/SaleUpdate'
+import SaleDetail from './components/Sale/SaleDetail'
+import SaleDetailUpdate from './components/Sale/SaleDetailUpdate'
 
 const App = () => {
   return (
@@ -38,6 +42,10 @@ const App = () => {
           <Route path='/customers/create' element={<CustomerCreate />}/>
           <Route path='/customers/:id/edit' element={<CustomerUpdate />}/>
           <Route path='/customers/:id/view' element={<CustomerDetail />}/>
+          <Route path='/sales' element={<Sale />}/>
+          <Route path='/sales/:id/edit' element={<SaleUpdate />}/>
+          <Route path='/sales/:id/view' element={<SaleDetail />}/>
+          <Route path='/sales/:id/updateDetail' element={<SaleDetailUpdate />}/>
         </Route>
       </Route>
       <Route path='/login' element={<Login />}/>

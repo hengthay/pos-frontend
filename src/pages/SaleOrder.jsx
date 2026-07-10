@@ -10,7 +10,6 @@ import { useOutletContext } from 'react-router-dom';
 import ErrorMessage from '../components/helper/ErrorMessage';
 import LoadingState from '../components/helper/LoadingState';
 import { MdOutlineRemoveShoppingCart, MdOutlineDiscount } from 'react-icons/md';
-import SaleCard from '../components/Sale/SaleCard';
 import { clearCart, selectCartDiscount, selectCartError, selectCartItems, selectCartStatus, selectCartSubtotal, selectCartTax, selectCartTotal } from '../feature/cartTemp/cartTempSlice';
 import CartItemCard from '../components/carts/CartItemCard';
 import { createSale } from '../feature/sales/saleSlice';

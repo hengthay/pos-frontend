@@ -39,7 +39,7 @@ const SideBar = ({ isOpen, onClose }) => {
   ];
 
   const supportItems = [
-    { id: 6, iconName: FaChartLine, label: "Total Sale", pathName: "/total-sales" },
+    { id: 6, iconName: FaChartLine, label: "Sale Management", pathName: "/sales" },
     { id: 7, iconName: FaShoppingBag, label: "Purchase", pathName: "/purchases" },
     { id: 8, iconName: FaTruck, label: "Supplier", pathName: "/suppliers" },
     { id: 9, iconName: FaMoneyBill, label: "Expenses", pathName: "/expenses" },

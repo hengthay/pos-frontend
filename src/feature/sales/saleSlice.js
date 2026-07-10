@@ -12,10 +12,10 @@ const initialState = {
 
 // Fetch all sales
 export const fetchSales = createAsyncThunk(
-  'sales/fetchSales', async (_, thunkAPI) => {
+  'sales/fetchSales', async (page = 1, thunkAPI) => {
     try {
       
-      const res = await axiosInstace.get(`${API_BASE_URL}/sales`);
+      const res = await axiosInstace.get(`${API_BASE_URL}/sales?page=${page}`);
 
       if(!res?.data?.data) {
         return thunkAPI.rejectWithValue("No Sales was founds!");
@@ -110,6 +110,32 @@ export const updateSale = createAsyncThunk(
   }
 )
 
+export const updateSaleDetail = createAsyncThunk(
+  'sales/updateSaleDetail', async ({ id, formData }, thunkAPI) => {
+    try {
+      
+      const res = await axiosInstace.put(`${API_BASE_URL}/sales/${id}/detail`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      });
+
+      if(!res?.data?.data) {
+        return thunkAPI.rejectWithValue("Unable to update sale detail!");
+      }
+
+      console.log("Sale Detail Update Response: ", res?.data?.data);
+
+      return res?.data?.data ?? null;
+    } catch (error) {
+      const msg = error?.response?.data?.message;
+      console.log("Error to update sale: ", msg);
+      console.log("143 pv");
+      return thunkAPI.rejectWithValue(msg);
+    }
+  }
+)
+
 // delete sale
 export const deleteSale = createAsyncThunk(
   'sales/deleteSale', async (id, thunkAPI) => {
@@ -175,7 +201,11 @@ const saleSlice = createSlice({
       .addCase(createSale.fulfilled, (state, action) => {
         state.error = null;
         state.status = "succeeded";
-        state.salesData = [...state.salesData, action.payload];
+        if (Array.isArray(state.salesData)) {
+          state.salesData.push(action.payload);
+        } else {
+          state.salesData = [action.payload];
+        }
       })
       .addCase(createSale.rejected, (state, action) => {
         state.error = action.payload || "Something went wrong!";
@@ -190,11 +220,36 @@ const saleSlice = createSlice({
         state.status = "succeeded";
         const updated = action.payload;
 
-        state.salesData = state.salesData.map((sale) => sale.id === updated.id ? updated : sale);
+        if (Array.isArray(state.salesData)) {
+          state.salesData = state.salesData.map((sale) =>
+            sale.id === updated.id ? updated : sale
+          );
+        }
 
         state.saleDetailData = updated;
       })
       .addCase(updateSale.rejected, (state, action) => {
+        state.error = action.payload || "Something went wrong!";
+        state.status = "failed";
+      })
+      .addCase(updateSaleDetail.pending, (state) => {
+        state.error = null;
+        state.status = "loading";
+      })
+      .addCase(updateSaleDetail.fulfilled, (state, action) => {
+        state.error = null;
+        state.status = "succeeded";
+        const updated = action.payload;
+
+        if (Array.isArray(state.salesData)) {
+          state.salesData = state.salesData.map((sale) =>
+            sale.id === updated.id ? updated : sale
+          );
+        }
+
+        state.saleDetailData = updated;
+      })
+      .addCase(updateSaleDetail.rejected, (state, action) => {
         state.error = action.payload || "Something went wrong!";
         state.status = "failed";
       })
@@ -226,4 +281,3 @@ export const selectSalesStatus = (state) => state.sales.status;
 export const selectSalesError = (state) => state.sales.error;
 export const selectSaleDetailData = (state) => state.sales.saleDetailData;
 export const selectSaleStatusDetail = (state) => state.sales.statusDetail;
-// export const selectSaleQuantity = (state) => state.sales.salesData.
