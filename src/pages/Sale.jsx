@@ -52,7 +52,7 @@ const Sale = () => {
     if(s) {
       lists = lists.filter((p) => {
         return (p.invoice_no || "").toLowerCase().includes(s) ||
-         (p.payment_status || "").toLowerCase().includes(s)
+         (p.payment_status || "").toLowerCase().includes(s) || (p?.customer?.name || "").toLowerCase().includes(s)
       })
     }
 
@@ -164,7 +164,7 @@ const Sale = () => {
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search products, code, category..."
+                placeholder="Search Invoice, Payment Status, Customer-name..."
                 className="bg-transparent outline-none px-2 py-1.5 text-sm w-full"
               />
             </div>
@@ -256,7 +256,7 @@ const Sale = () => {
               saleStatus === "succeeded" && filteredSale.length === 0 && (
                 <div className="w-full flex flex-col items-center justify-center py-16 bg-white border border-dashed border-gray-300 rounded-xl">
                   <h3 className="text-lg font-semibold text-gray-900">
-                    No inventory found!
+                    No sale found!
                   </h3>
                   <p className="text-sm text-gray-500 mt-2">
                     Try another keyword or change the filter.
@@ -279,7 +279,7 @@ const Sale = () => {
             <div className="flex flex-col md:flex-row items-center justify-between gap-4 px-6 py-4">
               <p className="text-sm font-medium text-gray-600">
                 Showing <span className="font-semibold">{sales?.sales?.from}-{sales?.sales?.to}</span> of{" "}
-                <span className="font-semibold">{sales?.sales?.total}</span> products
+                <span className="font-semibold">{sales?.sales?.total}</span> sales
               </p>
 
               {/* Pagination */}

@@ -14,7 +14,6 @@ const initialState = {
 export const fetchSales = createAsyncThunk(
   'sales/fetchSales', async (page = 1, thunkAPI) => {
     try {
-      
       const res = await axiosInstace.get(`${API_BASE_URL}/sales?page=${page}`);
 
       if(!res?.data?.data) {
@@ -73,7 +72,7 @@ export const createSale = createAsyncThunk(
 
       console.log("Sale Created Response: ", res?.data?.data);
 
-      return res?.data?.data ?? [];
+      return res?.data?.data ?? null;
     } catch (error) {
       const msg = error?.response?.data?.message;
       console.log("Error to create sale: ", msg);
@@ -261,8 +260,10 @@ const saleSlice = createSlice({
         state.error = null;
         state.status = "succeeded";
         const deletedId = action.payload;
-
-        state.salesData = state.salesData.filter((sale) => sale.id !== deletedId);
+        
+        if(Array.isArray(state.salesData)) {
+          state.salesData = state.salesData.filter((sale) => sale.id !== deletedId);
+        }
 
         if(state.saleDetailData?.id === deletedId) {
           state.saleDetailData = null;
