@@ -1,16 +1,17 @@
-import React from 'react'
 import formatDate from '../helper/formatDate'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { CiEdit, CiTrash } from 'react-icons/ci'
 import { FaCreditCard } from "react-icons/fa6";
 import { GrView } from 'react-icons/gr'
 import { useDispatch } from 'react-redux'
 import Swal from 'sweetalert2'
-import { deleteSale } from '../../feature/sales/saleSlice'
+import { deleteSale, resetSaleStatus } from '../../feature/sales/saleSlice'
 
 const SaleCard = ({ sale }) => {
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const handleDelete = async (id) => {
     const result = await Swal.fire({
       title: "Are you sure?",
@@ -27,6 +28,8 @@ const SaleCard = ({ sale }) => {
     try {
       await dispatch(deleteSale(id)).unwrap();
 
+      dispatch(resetSaleStatus());
+
       await Swal.fire({
         title: "Deleted",
         text: "Sale has been deleted successfully!",
@@ -34,6 +37,12 @@ const SaleCard = ({ sale }) => {
         timer: 1500,
         showConfirmButton: false,
       });
+
+      const timeoutId = setTimeout(() => {
+        navigate('/sales');
+      }, 1500);
+
+      return () => clearTimeout(timeoutId);
     } catch (error) {
       console.log(error);
       Swal.fire({

@@ -1,16 +1,17 @@
-import React from 'react'
 import { CiEdit, CiTrash } from 'react-icons/ci'
 import { FaLayerGroup } from 'react-icons/fa6'
 import { MdUpdate } from 'react-icons/md'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import formatOnlyDay from "../helper/formatOnlyDay";
 import { useDispatch } from 'react-redux'
 import Swal from 'sweetalert2'
-import { deleteCategory } from '../../feature/categories/categorySlice'
+import { deleteCategory, resetCategoryStatus } from '../../feature/categories/categorySlice'
 
 const CategoryCard = ({ category }) => {
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const handleDelete = async (id) => {
     const result = await Swal.fire({
       title: "Are you sure?",
@@ -27,6 +28,8 @@ const CategoryCard = ({ category }) => {
     try {
       await dispatch(deleteCategory(id)).unwrap();
 
+      dispatch(resetCategoryStatus());
+
       Swal.fire({
         title: "Deleted",
         text: "Category has been deleted successfully!",
@@ -34,6 +37,13 @@ const CategoryCard = ({ category }) => {
         timer: 1500,
         showConfirmButton: false,
       });
+
+      const timeoutId = setTimeout(() => {
+        navigate('/sales');
+      }, 1500);
+
+      return () => clearTimeout(timeoutId);
+
     } catch (error) {
       console.log(error);
       Swal.fire({

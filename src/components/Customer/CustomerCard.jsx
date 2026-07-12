@@ -1,15 +1,15 @@
-import React from 'react'
 import { CiEdit, CiTrash } from 'react-icons/ci'
 import { GrView } from 'react-icons/gr'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import formatDate from '../helper/formatDate'
 import Swal from 'sweetalert2'
 import { useDispatch } from 'react-redux'
-import { deleteCustomer } from '../../feature/customers/customerSlice'
+import { deleteCustomer, resetCustomerStatus } from '../../feature/customers/customerSlice'
 
 const CustomerCard = ({ customer }) => {
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleDelete = async (id) => {
     const result = await Swal.fire({
@@ -27,6 +27,8 @@ const CustomerCard = ({ customer }) => {
     try {
       await dispatch(deleteCustomer(id)).unwrap();
 
+      dispatch(resetCustomerStatus());
+
       await Swal.fire({
         title: "Deleted",
         text: "Customer has been deleted successfully!",
@@ -34,6 +36,12 @@ const CustomerCard = ({ customer }) => {
         timer: 1500,
         showConfirmButton: false,
       });
+
+      const timeoutId = setTimeout(() => {
+        navigate('/customers');
+      }, 1500);
+
+      return () => clearTimeout(timeoutId);
     } catch (error) {
       console.log(error);
       Swal.fire({

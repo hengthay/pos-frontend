@@ -1,6 +1,5 @@
-import React from 'react'
 import formatDate from '../helper/formatDate'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { CiEdit, CiTrash } from 'react-icons/ci'
 import { GrView } from 'react-icons/gr'
 import { useDispatch } from 'react-redux'
@@ -12,6 +11,7 @@ import { resetSupplierStatus } from '../../feature/suppliers/supplierSlice'
 const PurchaseCard = ({ purchase }) => {
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleDelete = async (id) => {
     const result = await Swal.fire({
@@ -40,6 +40,12 @@ const PurchaseCard = ({ purchase }) => {
         timer: 1500,
         showConfirmButton: false,
       });
+
+      const timeoutId = setTimeout(() => {
+        navigate('/purchases');
+      }, 1500);
+
+      return () => clearTimeout(timeoutId);
     } catch (error) {
       console.log(error);
       Swal.fire({

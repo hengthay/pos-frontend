@@ -152,7 +152,7 @@ const ProductCreate = () => {
             <div className="md:col-span-8 col-span-12 flex flex-col item-start justify-start space-y-4">
               {/* Title */}
               <div className="space-y-1 flex flex-col">
-                <label id="product_name" className="text-sm font-medium text-gray-700">
+                <label htmlFor="product_name" className="text-sm font-medium text-gray-700">
                   Product Name <span className='text-base text-red-500'>*</span>
                 </label>
                 <input
@@ -168,7 +168,7 @@ const ProductCreate = () => {
               </div>
 
               <div className="space-y-1 flex flex-col">
-                <label id="brand" className="text-sm font-medium text-gray-700">
+                <label htmlFor="brand" className="text-sm font-medium text-gray-700">
                   Brand
                 </label>
                 <input
@@ -181,7 +181,7 @@ const ProductCreate = () => {
                 />
               </div>
               <div className="space-y-1 flex flex-col">
-                <label id="stock_quantity" className="text-sm font-medium text-gray-700">
+                <label htmlFor="stock_quantity" className="text-sm font-medium text-gray-700">
                   Stock Quantity <span className='text-base text-red-500'>*</span>
                 </label>
                 <input
@@ -196,7 +196,7 @@ const ProductCreate = () => {
                 />
               </div>
               <div className="space-y-1 flex flex-col">
-                <label id="type" className="text-sm font-medium text-gray-700">
+                <label htmlFor="type" className="text-sm font-medium text-gray-700">
                   Product Type
                 </label>
                 <select 
@@ -215,7 +215,7 @@ const ProductCreate = () => {
               {/* Category */}
               <div className="space-y-1 flex flex-col">
                 <label
-                  id="category_id"
+                  htmlFor="category_id"
                   className="text-sm font-medium text-gray-700"
                 >
                   Category <span className='text-base text-red-500'>*</span>
@@ -239,7 +239,7 @@ const ProductCreate = () => {
               </div>
               {/* Description */}
               <div className="space-y-1 flex flex-col">
-                <label id="description" className="text-sm font-medium text-gray-700">
+                <label htmlFor="description" className="text-sm font-medium text-gray-700">
                   Description
                 </label>
                 <textarea 
@@ -287,7 +287,7 @@ const ProductCreate = () => {
                 {/* Upload */}
                 <p className="flex justify-end items-end w-full">
                   <label
-                    id="image_url"
+                    htmlFor="image_url"
                     className="cursor-pointer inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-900 text-white text-sm font-semibold hover:bg-gray-800 transition"
                   >
                     <FiUpload />
@@ -305,7 +305,7 @@ const ProductCreate = () => {
               </div>
 
               <div className="space-y-1 flex flex-col">
-                <label id="cost_price" className="text-sm font-medium text-gray-700">
+                <label htmlFor="cost_price" className="text-sm font-medium text-gray-700">
                   Cost Price <span className='text-base text-red-500'>*</span>
                 </label>
                 <input
@@ -320,7 +320,7 @@ const ProductCreate = () => {
               </div>
 
               <div className="space-y-1 flex flex-col">
-                <label id="selling_price" className="text-sm font-medium text-gray-700">
+                <label htmlFor="selling_price" className="text-sm font-medium text-gray-700">
                   Selling Price <span className='text-base text-red-500'>*</span>
                 </label>
                 <input

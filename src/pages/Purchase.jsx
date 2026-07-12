@@ -12,6 +12,7 @@ import LoadingState from '../components/helper/LoadingState';
 import ErrorMessage from '../components/helper/ErrorMessage';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import PurchaseCard from '../components/Purchase/PurchaseCard';
+import PaginationRender from '../components/helper/PaginationRender';
 
 const Purchase = () => {
 
@@ -291,39 +292,12 @@ const Purchase = () => {
           </div>
         </div>
 
-        <div className='md:px-2'>
-          <div className="bg-white rounded-b-xl border border-gray-200 shadow-sm">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-4 px-6 py-4">
-              <p className="text-sm font-medium text-gray-600">
-                Showing <span className="font-semibold">{purchasePagination?.from}-{purchasePagination?.to}</span> of{" "}
-                <span className="font-semibold">{purchasePagination?.total}</span> purchases
-              </p>
-
-              {/* Pagination */}
-              <div className="flex items-center gap-2">
-                <button 
-                  disabled={page === 1}
-                  onClick={() => setPage(prev => prev - 1)}
-                  className="w-11 h-11 flex items-center justify-center rounded-md border border-gray-300 bg-white hover:bg-gray-100 transition">
-                  <IoIosArrowBack size={18} />
-                </button>
-                <button className="w-11 h-11 rounded-md border border-gray-300 bg-blue-700 text-white font-semibold shadow">
-                  {purchasePagination?.current_page}
-                </button>
-                <span className="px-2 text-gray-500 font-semibold">...</span>
-                <button className="w-11 h-11 rounded-md border border-gray-300 bg-white hover:bg-gray-100 transition font-medium">
-                  {purchasePagination?.last_page}
-                </button>
-                <button 
-                  disabled={purchasePagination?.current_page === purchasePagination?.last_page}
-                  onClick={() => setPage(prev => prev + 1)}
-                  className="w-11 h-11 flex items-center justify-center rounded-md border border-gray-300 bg-white hover:bg-gray-100 transition">
-                  <IoIosArrowForward size={18} />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <PaginationRender 
+          page={page} 
+          setPage={setPage} 
+          data={purchasePagination} 
+          pageName={"purchases"}
+          />
       </div>
     </div>
   )

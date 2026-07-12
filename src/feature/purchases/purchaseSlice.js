@@ -206,7 +206,7 @@ const purchaseSlice = createSlice({
           state.purchasesData = state.purchasesData.filter((purchase) => purchase.id !== deletedId);
         }
 
-        if(state.purchaseDetailData?.id === deletedId) {
+        if(state?.purchaseDetailData?.id === deletedId) {
           state.purchaseDetailData = null;
         }
       })

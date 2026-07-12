@@ -161,8 +161,10 @@ const saleSlice = createSlice({
   name: "sales",
   initialState,
   reducers: {
-    addItemToCart: (state, action) => {
-      
+    resetSaleStatus: (state, action) => {
+      state.status = "idle";
+      state.statusDetail = "idle";
+      state.error = null;
     }
   },
   extraReducers: (builder) => {
@@ -277,6 +279,7 @@ const saleSlice = createSlice({
 });
 
 export default saleSlice.reducer;
+export const { resetSaleStatus } = saleSlice.actions;
 export const selectSalesData = (state) => state.sales.salesData;
 export const selectSalesStatus = (state) => state.sales.status;
 export const selectSalesError = (state) => state.sales.error;

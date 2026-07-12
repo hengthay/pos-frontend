@@ -141,7 +141,7 @@ const CustomerUpdate = () => {
               <div className="grid grid-cols-12 items-center justify-center gap-6 mx-auto">
                 <div className="md:col-span-6 col-span-12 flex flex-col item-start justify-start space-y-4">
                   <div className="space-y-1 flex flex-col">
-                    <label id="name" className="text-sm font-medium text-gray-700">
+                    <label htmlFor="name" className="text-sm font-medium text-gray-700">
                       Customer Name <span className='text-base text-red-500'>*</span>
                     </label>
                     <input
@@ -173,7 +173,7 @@ const CustomerUpdate = () => {
                 </div>
                 <div className="md:col-span-6 col-span-12 flex flex-col item-start justify-start space-y-4">
                   <div className="space-y-1 flex flex-col">
-                    <label id="phone" className="text-sm font-medium text-gray-700">
+                    <label htmlFor="phone" className="text-sm font-medium text-gray-700">
                       Phone Number
                     </label>
                     <input
@@ -188,7 +188,7 @@ const CustomerUpdate = () => {
                   </div>
 
                   <div className="space-y-1 flex flex-col">
-                    <label id="address" className="text-sm font-medium text-gray-700">
+                    <label htmlFor="address" className="text-sm font-medium text-gray-700">
                       Address
                     </label>
                     <input

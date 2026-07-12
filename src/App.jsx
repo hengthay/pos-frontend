@@ -26,6 +26,10 @@ import Purchase from "./pages/Purchase"
 import PurchaseCreate from './components/Purchase/PurchaseCreate'
 import PurchaseUpdate from './components/Purchase/PurchaseUpdate'
 import PurchaseDetail from './components/Purchase/PurchaseDetail'
+import Supplier from './pages/Supplier';
+import SupplierCreate from './components/Supplier/SupplierCreate'
+import SupplierUpdate from './components/Supplier/SupplierUpdate'
+import SupplierDetail from './components/Supplier/SupplierDetail'
 
 const App = () => {
   return (
@@ -54,7 +58,10 @@ const App = () => {
           <Route path='/purchases/create' element={<PurchaseCreate />}/>
           <Route path='/purchases/:id/edit' element={<PurchaseUpdate />}/>
           <Route path='/purchases/:id/view' element={<PurchaseDetail />}/>
-
+          <Route path='/suppliers' element={<Supplier />}/>
+          <Route path='/suppliers/create' element={<SupplierCreate />}/>
+          <Route path='/suppliers/:id/edit' element={<SupplierUpdate />}/>
+          <Route path='/suppliers/:id/view' element={<SupplierDetail />}/>
         </Route>
       </Route>
       <Route path='/login' element={<Login />}/>

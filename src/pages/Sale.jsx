@@ -1,17 +1,15 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { FaBoxOpen, FaExclamationTriangle, FaLayerGroup, FaSearch } from 'react-icons/fa'
 import { IoAlertCircleOutline, IoFilter } from 'react-icons/io5'
 import { RiArrowDropDownLine, RiArrowDropUpLine } from 'react-icons/ri'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchSales, selectSalesData, selectSalesError, selectSalesStatus } from '../feature/sales/saleSlice'
 import { Link } from 'react-router-dom'
-import { GrView } from 'react-icons/gr'
-import { CiEdit, CiTrash } from 'react-icons/ci'
 import formatDate from "../components/helper/formatDate"
-import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 import SaleCard from '../components/Sale/SaleCard'
 import LoadingState from '../components/helper/LoadingState'
 import ErrorMessage from '../components/helper/ErrorMessage'
+import PaginationRender from '../components/helper/PaginationRender'
 
 const Sale = () => {
 
@@ -79,6 +77,8 @@ const Sale = () => {
     setSearch("");
     setSort("all");
   }
+
+  const salesData = sales?.sales;
 
   return (
     <div className='w-full md:space-y-6 space-y-3'>
@@ -244,7 +244,7 @@ const Sale = () => {
                   </tr>
                 )}
                 {
-                  sales?.sales?.data?.length > 0 && saleStatus === "succeeded" && (
+                  salesData?.data?.length > 0 && saleStatus === "succeeded" && (
                     filteredSale?.map((sale) => (
                       <SaleCard sale={sale} key={sale.id}/>
                     ))
@@ -274,39 +274,12 @@ const Sale = () => {
           </div>
         </div>
 
-        <div className='md:px-2'>
-          <div className="bg-white rounded-b-xl border border-gray-200 shadow-sm">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-4 px-6 py-4">
-              <p className="text-sm font-medium text-gray-600">
-                Showing <span className="font-semibold">{sales?.sales?.from}-{sales?.sales?.to}</span> of{" "}
-                <span className="font-semibold">{sales?.sales?.total}</span> sales
-              </p>
-
-              {/* Pagination */}
-              <div className="flex items-center gap-2">
-                <button 
-                  disabled={page === 1}
-                  onClick={() => setPage(prev => prev - 1)}
-                  className="w-11 h-11 flex items-center justify-center rounded-md border border-gray-300 bg-white hover:bg-gray-100 transition">
-                  <IoIosArrowBack size={18} />
-                </button>
-                <button className="w-11 h-11 rounded-md border border-gray-300 bg-blue-700 text-white font-semibold shadow">
-                  {sales?.sales?.current_page}
-                </button>
-                <span className="px-2 text-gray-500 font-semibold">...</span>
-                <button className="w-11 h-11 rounded-md border border-gray-300 bg-white hover:bg-gray-100 transition font-medium">
-                  {sales?.sales?.last_page}
-                </button>
-                <button 
-                  disabled={sales?.sales?.current_page === sales?.sales?.last_page}
-                  onClick={() => setPage(prev => prev + 1)}
-                  className="w-11 h-11 flex items-center justify-center rounded-md border border-gray-300 bg-white hover:bg-gray-100 transition">
-                  <IoIosArrowForward size={18} />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <PaginationRender 
+          page={page} 
+          setPage={setPage} 
+          data={salesData} 
+          pageName={"sales"}
+          />
       </div>
     </div>
   )

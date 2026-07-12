@@ -123,7 +123,7 @@ const CategoryUpdate = () => {
           <div className="grid grid-cols-12 w-full justify-center gap-6 mx-auto">
             <div className="md:col-span-6 col-span-12 space-y-4">
               <div className="space-y-2 flex flex-col">
-                <label className="text-sm font-medium text-gray-700">
+                <label htmlFor="category_name" className="text-sm font-medium text-gray-700">
                   Category Name <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -139,7 +139,7 @@ const CategoryUpdate = () => {
             </div>
             <div className="md:col-span-6 col-span-12 space-y-4">
               <div className="space-y-2 flex flex-col">
-                <label className="text-sm font-medium text-gray-700">
+                <label htmlFor="description" className="text-sm font-medium text-gray-700">
                   Description
                 </label>
                 <input

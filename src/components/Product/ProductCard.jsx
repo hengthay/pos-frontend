@@ -1,13 +1,15 @@
 import { CiEdit, CiTrash } from 'react-icons/ci';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { deleteProduct } from '../../feature/products/productSlice';
+import { deleteProduct, resetProductStatus } from '../../feature/products/productSlice';
 import { GrView } from 'react-icons/gr';
 
 const ProductCard = ({ product }) => {
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const handleDelete = async (id) => {
     const result = await Swal.fire({
       title: "Are you sure?",
@@ -24,6 +26,8 @@ const ProductCard = ({ product }) => {
     try {
       await dispatch(deleteProduct(id)).unwrap();
 
+      dispatch(resetProductStatus());
+      
       await Swal.fire({
         title: "Deleted",
         text: "Product has been deleted successfully!",
@@ -31,6 +35,12 @@ const ProductCard = ({ product }) => {
         timer: 1500,
         showConfirmButton: false,
       });
+
+      const timeoutId = setTimeout(() => {
+        navigate('/products');
+      }, 1500);
+
+      return () => clearTimeout(timeoutId);
     } catch (error) {
       console.log(error);
       Swal.fire({
