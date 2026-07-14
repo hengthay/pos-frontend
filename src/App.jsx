@@ -1,4 +1,3 @@
-import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import DashboardLayout from './components/layout/DashboardLayout'
 import NotFound from './pages/NotFound'
@@ -26,10 +25,14 @@ import Purchase from "./pages/Purchase"
 import PurchaseCreate from './components/Purchase/PurchaseCreate'
 import PurchaseUpdate from './components/Purchase/PurchaseUpdate'
 import PurchaseDetail from './components/Purchase/PurchaseDetail'
-import Supplier from './pages/Supplier';
+import Supplier from './pages/Supplier'
 import SupplierCreate from './components/Supplier/SupplierCreate'
 import SupplierUpdate from './components/Supplier/SupplierUpdate'
 import SupplierDetail from './components/Supplier/SupplierDetail'
+import Expense from "./pages/Expense"
+import ExpenseCreate from './components/Expenses/ExpenseCreate'
+import ExpenseUpdate from './components/Expenses/ExpenseUpdate'
+import ExpenseDetail from './components/Expenses/ExpenseDetail'
 
 const App = () => {
   return (
@@ -62,6 +65,10 @@ const App = () => {
           <Route path='/suppliers/create' element={<SupplierCreate />}/>
           <Route path='/suppliers/:id/edit' element={<SupplierUpdate />}/>
           <Route path='/suppliers/:id/view' element={<SupplierDetail />}/>
+          <Route path='/expenses' element={<Expense />}/>
+          <Route path='/expenses/create' element={<ExpenseCreate />}/>
+          <Route path='/expenses/:id/edit' element={<ExpenseUpdate />}/>
+          <Route path='/expenses/:id/view' element={<ExpenseDetail />}/>
         </Route>
       </Route>
       <Route path='/login' element={<Login />}/>

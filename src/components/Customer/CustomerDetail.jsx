@@ -63,7 +63,7 @@ const CustomerDetail = () => {
   const isDeleted = !!customerDetail.deleted_at
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50/40">
+    <div className="min-h-screen bg-linear-to-br from-slate-50 to-blue-50/40">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-8 space-y-6">
         <div className="rounded-3xl border border-gray-200 bg-white/90 backdrop-blur shadow-sm p-5 lg:p-6">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">

@@ -155,7 +155,7 @@ const Sale = () => {
         </div>
         
         <div className='md:px-2'>  
-          <div className='w-full bg-blue-50 shadow-sm rounded-t-xl md:p-4 p-2 md:my-0 my-2 flex gap-2'>
+          <div className='w-full bg-blue-50 shadow-sm rounded-t-xl md:p-4 p-2 flex gap-2'>
             <div
               className={`flex items-center bg-gray-100 border border-gray-300 rounded-lg px-3 py-1 w-100`}
             >

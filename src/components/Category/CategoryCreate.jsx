@@ -145,11 +145,12 @@ const CategoryCreate = () => {
             </Link>
 
             <button
+              disabled={loading}
               type="submit"
-              className="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-gray-900 text-white text-sm font-semibold hover:bg-gray-800 transition cursor-pointer"
+              className="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-gray-900 text-white text-sm font-semibold hover:bg-gray-800 transition cursor-pointer disabled:bg-gray-200"
             >
               <FiSave />
-              Save
+              {loading ? "Creating..." : "Save"}
             </button>
           </div>
         </form>

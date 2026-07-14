@@ -1,18 +1,17 @@
 import React, { useState } from 'react'
-import { FiArrowLeft, FiSave } from 'react-icons/fi'
-import { useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom'
-import { createSupplier, resetSupplierStatus } from '../../feature/suppliers/supplierSlice';
 import Swal from 'sweetalert2';
+import { createExpense, resetExpenseStatus } from '../../feature/expenses/expenseSlice';
+import { FiArrowLeft, FiSave } from 'react-icons/fi';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
-const SupplierCreate = () => {
+const ExpenseCreate = () => {
 
   const [form, setForm] = useState({
-    supplier_name: "",
-    contact_name: "",
-    phone: "",
-    address: "",
-    email: ""
+    title: "",
+    amount: 0,
+    expense_date: "",
+    description: ""
   });
 
   const dispatch = useDispatch();
@@ -34,45 +33,44 @@ const SupplierCreate = () => {
     try {
       setLoading(true);
 
-      if(!form.supplier_name) return setIsError("Supplier Name is missing!");
+      if(!form.title) return setIsError("Title is missing!");
+      if(!form.amount) return setIsError("Amount is missing!");
+      if(!form.expense_date) return setIsError("Expense Date is missing!");
 
       const formData = new FormData();
-      formData.append("supplier_name", form.supplier_name);
-      formData.append("email", form.email);
-      formData.append("phone", form.phone);
-      formData.append("address", form.address);
-      formData.append("contact_name", form.contact_name);
-      
+      formData.append("title", form.title);
+      formData.append("amount", form.amount);
+      formData.append("expense_date", form.expense_date);
+      formData.append("description", form.description);
 
-      await dispatch(createSupplier(formData)).unwrap();
+      await dispatch(createExpense(formData)).unwrap();
 
       // Reset status
-      dispatch(resetSupplierStatus());
+      dispatch(resetExpenseStatus());
 
       Swal.fire({
         title: "Created",
-        text: "Your Supplier is created successfully!",
+        text: "Your Expense is created successfully!",
         icon: "success",
         timer: 1500,
       });
 
       const timeOut = setTimeout(() => {
-        navigate("/suppliers");
+        navigate("/expenses");
       }, 2000);
 
       setForm({
-        supplier_name: "",
-        email: "",
-        phone: "",
-        address: "",
-        contact_name: "",
+        title: "",
+        amount: 0,
+        expense_date: "",
+        description: ""
       });
 
       return () => clearTimeout(timeOut);
     } catch (error) {
       Swal.fire({
         title: "Failed",
-        text: "Your Supplier is created failed!",
+        text: "Your Expense is created failed!",
         icon: "error",
         timer: 1500,
       });
@@ -87,110 +85,94 @@ const SupplierCreate = () => {
       <div className="flex md:items-center items-start justify-between">
         <div>
           <h2 className="md:text-3xl font-medium sm:text-2xl text-xl text-gray-900 text-wrap">
-            Add New Supplier
+            Add New Expense
           </h2>
           <p className="text-sm text-gray-500 mt-1">
-            Fill in the form to create a new supplier.
+            Fill in the form to create a new Expense.
           </p>
         </div>
 
         <Link
-          to="/suppliers"
+          to="/expenses"
           className="inline-flex items-center md:gap-2 gap-1 text-sm font-medium text-gray-600 hover:text-gray-900"
         >
           <FiArrowLeft />
           Back
         </Link>
       </div>
+
       <div className='w-full md:my-6 my-4'>
-        <form 
+        <form
           onSubmit={handleSubmit}
-          className="w-full p-3 space-y-6"
           encType="multipart/form-data"
-          >
-          <div className="grid grid-cols-12 items-start justify-center gap-6 mx-auto">
+        >
+          <div className="grid grid-cols-12 justify-center w-full gap-6 mx-auto">
             <div className="md:col-span-6 col-span-12 space-y-4">
-              <div className="space-y-1 flex flex-col">
-                <label htmlFor="supplier_name" className="text-sm font-medium text-gray-700">
-                  Supplier Name <span className='text-base text-red-500'>*</span>
+              <div className="space-y-2 flex flex-col">
+                <label htmlFor='title' className="text-sm font-medium text-gray-700">
+                  Title <span className="text-red-500">*</span>
                 </label>
                 <input
+                  id="title"
                   type="text"
-                  id="supplier_name"
-                  name="supplier_name"
-                  value={form.supplier_name}
+                  name="title"
+                  value={form.title}
                   onChange={handleOnChange}
                   required
-                  placeholder="e.g. John Doe"
+                  placeholder="e.g. Electric Bill"
                   className="w-full border border-gray-300 rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-gray-200"
                 />
               </div>
-
-              <div className="space-y-1 flex flex-col">
-                <label htmlFor="email" className="text-sm font-medium text-gray-700">
-                  Email
+              <div className="space-y-2 flex flex-col">
+                <label htmlFor='amount' className="text-sm font-medium text-gray-700">
+                  Amount <span className="text-red-500">*</span>
                 </label>
                 <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={form.email}
+                  id="amount"
+                  type="text"
+                  name="amount"
+                  value={form.amount}
                   onChange={handleOnChange}
-                  placeholder="e.g. johndoe@gmail.com"
+                  required
+                  placeholder="e.g. 100"
                   className="w-full border border-gray-300 rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-gray-200"
                 />
               </div>
-
-              <div className="space-y-1 flex flex-col">
-                <label htmlFor="contact_name" className="text-sm font-medium text-gray-700">
-                  Contact Name
+              <div className="space-y-2 flex flex-col">
+                <label htmlFor='expense_date' className="text-sm font-medium text-gray-700">
+                  Expense Date <span className="text-red-500">*</span>
                 </label>
                 <input
-                  type="contact_name"
-                  id="contact_name"
-                  name="contact_name"
-                  value={form.contact_name}
+                  id="expense_date"
+                  type="date"
+                  name="expense_date"
+                  value={form.expense_date}
                   onChange={handleOnChange}
-                  placeholder="e.g. johndoe"
                   className="w-full border border-gray-300 rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-gray-200"
                 />
               </div>
             </div>
             <div className="md:col-span-6 col-span-12 space-y-4">
-              <div className="space-y-1 flex flex-col">
-                <label htmlFor="phone" className="text-sm font-medium text-gray-700">
-                  Phone Number
+              <div className="space-y-2 flex flex-col">
+                <label htmlFor='description' className="text-sm font-medium text-gray-700">
+                  Description
                 </label>
-                <input
-                  type="text"
-                  id="phone"
-                  name="phone"
-                  value={form.phone}
+                <textarea
+                  id="description"
+                  name="description"
+                  value={form.description}
                   onChange={handleOnChange}
-                  placeholder="e.g. (+855) 10200200"
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-gray-200"
-                />
-              </div>
-
-              <div className="space-y-1 flex flex-col">
-                <label htmlFor="address" className="text-sm font-medium text-gray-700">
-                  Address
-                </label>
-                <input
-                  type="text"
-                  id="address"
-                  name="address"
-                  value={form.address}
-                  onChange={handleOnChange}
-                  placeholder="e.g. Phnom Penh, Cambodia"
+                  rows={4}
+                  placeholder="e.g. Describe the detail..."
                   className="w-full border border-gray-300 rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-gray-200"
                 />
               </div>
             </div>
           </div>
+
           <div className="flex justify-end gap-3 pt-4">
             <Link
-              to="/suppliers"
+              to="/expenses"
               className="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 text-sm font-medium hover:bg-gray-100 transition"
             >
               Cancel
@@ -205,11 +187,11 @@ const SupplierCreate = () => {
               {loading ? "Creating..." : "Save"}
             </button>
           </div>
+          {isError && <p className="text-base text-red-500">{isError}</p>}
         </form>
-        {isError && <p className="text-base text-red-500">{isError}</p>}
       </div>
     </div>
   )
 }
 
-export default SupplierCreate
+export default ExpenseCreate

@@ -9,10 +9,10 @@ const initialState = {
   statusDetail: "idle"
 }
 
-export const fetchSuppliers = createAsyncThunk(
-  "suppliers/fetchSuppliers", async (params = {}, thunkAPI) => {
+export const fetchSuppliers= createAsyncThunk(
+  "suppliers/fetchSuppliers", async (_, thunkAPI) => {
     try {
-      const res = await axiosInstace.get(`${API_BASE_URL}/suppliers`, { params });
+      const res = await axiosInstace.get(`${API_BASE_URL}/suppliers`);
 
       if(!res?.data?.data) {
         return thunkAPI.rejectWithValue("No Suppliers was founds!");
@@ -24,6 +24,27 @@ export const fetchSuppliers = createAsyncThunk(
     } catch (error) {
       const msg = error?.response?.data?.message;
       console.log("Error to fetch suppliers: ", msg);
+      console.log("143 pv");
+      return thunkAPI.rejectWithValue(msg);
+    }
+  }
+)
+
+export const fetchSupplierByPagination = createAsyncThunk(
+  "suppliers/fetchSupplierByPagination", async (params = {}, thunkAPI) => {
+    try {
+      const res = await axiosInstace.get(`${API_BASE_URL}/suppliers`, { params });
+
+      if(!res?.data?.data) {
+        return thunkAPI.rejectWithValue("No Supplier was found!");
+      }
+
+      console.log("Supplier Response: ", res?.data?.data);
+
+      return res?.data?.data ?? [];
+    } catch (error) {
+      const msg = error?.response?.data?.message;
+      console.log("Error to fetch supplier: ", msg);
       console.log("143 pv");
       return thunkAPI.rejectWithValue(msg);
     }
@@ -142,6 +163,19 @@ const supplierSlice = createSlice({
         state.suppliersData = action.payload;
       })
       .addCase(fetchSuppliers.rejected, (state, action) => {
+        state.error = action.payload || "Something went wrong!",
+        state.status = "failed";
+      })
+      .addCase(fetchSupplierByPagination.pending, (state) => {
+        state.error = null,
+        state.status = "loading";
+      })
+      .addCase(fetchSupplierByPagination.fulfilled, (state, action) => {
+        state.error = null,
+        state.status = "succeeded";
+        state.suppliersData = action.payload;
+      })
+      .addCase(fetchSupplierByPagination.rejected, (state, action) => {
         state.error = action.payload || "Something went wrong!",
         state.status = "failed";
       })
