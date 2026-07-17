@@ -6,11 +6,15 @@ import { GrView } from 'react-icons/gr'
 import { useDispatch } from 'react-redux'
 import Swal from 'sweetalert2'
 import { deleteSale, resetSaleStatus } from '../../feature/sales/saleSlice'
+import { MdPreview } from 'react-icons/md';
+import { useEffect, useState } from 'react';
+import { API_BASE_URL, axiosInstace } from '../APIConfig';
 
 const SaleCard = ({ sale }) => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [preview, setPreview] = useState(null);
 
   const handleDelete = async (id) => {
     const result = await Swal.fire({
@@ -54,6 +58,21 @@ const SaleCard = ({ sale }) => {
     }
   };
 
+  const getPreviewInvoice = async (id) => {
+    try {
+      const res = await axiosInstace.get(`${API_BASE_URL}/invoices/${id}/get-invoice`);
+
+      setPreview(res?.data?.data);
+
+      console.log(res?.data?.data);
+
+      return res?.data?.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  console.log(preview);
   return (
     <tr 
       key={sale.id}
@@ -102,6 +121,19 @@ const SaleCard = ({ sale }) => {
               >
                 <CiEdit size={15} />
               </Link>
+            )
+          }
+
+          {
+            sale?.payment_status === "paid" && (
+              <button
+                onClick={() => getPreviewInvoice(sale?.id)}
+                type='button'
+                title="Preview Invoice"
+                className="p-2 rounded-lg border border-blue-200 text-blue-600 hover:bg-blue-50 transition cursor-pointer"
+              >
+                <MdPreview size={15} />
+              </button>
             )
           }
           

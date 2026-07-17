@@ -7,6 +7,7 @@ import { AiFillProduct } from "react-icons/ai";
 import { FiLogOut } from 'react-icons/fi';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { RiExpandUpDownLine } from "react-icons/ri";
+import { MdOutlinePayments } from "react-icons/md";
 import Swal from 'sweetalert2';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser, selectUser } from '../feature/auth/authSlice';
@@ -41,9 +42,10 @@ const SideBar = ({ isOpen, onClose }) => {
   const supportItems = [
     { id: 6, iconName: FaChartLine, label: "Sale Management", pathName: "/sales" },
     { id: 7, iconName: FaShoppingBag, label: "Purchase", pathName: "/purchases" },
-    { id: 8, iconName: FaTruck, label: "Supplier", pathName: "/suppliers" },
-    { id: 9, iconName: FaMoneyBill, label: "Expenses", pathName: "/expenses" },
-    { id: 10, iconName: FaChartBar, label: "Reports", pathName: "/reports" },
+    { id: 8, iconName: MdOutlinePayments, label: "Payment", pathName: "/payments" },
+    { id: 9, iconName: FaTruck, label: "Supplier", pathName: "/suppliers" },
+    { id: 10, iconName: FaMoneyBill, label: "Expenses", pathName: "/expenses" },
+    { id: 11, iconName: FaChartBar, label: "Reports", pathName: "/reports" },
   ];
 
   const handleLogout = async () => {

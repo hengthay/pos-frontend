@@ -9,6 +9,7 @@ import customerReducer from "../feature/customers/customerSlice";
 import purchaseReducer from "../feature/purchases/purchaseSlice";
 import supplierReducer from "../feature/suppliers/supplierSlice";
 import expenseReducer from "../feature/expenses/expenseSlice";
+import paymentReducer from "../feature/payments/paymentSlice";
 
 const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ const store = configureStore({
     purchases: purchaseReducer,
     suppliers: supplierReducer,
     expenses: expenseReducer,
+    payments: paymentReducer,
   }
 });
 

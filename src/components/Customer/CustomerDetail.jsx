@@ -25,7 +25,7 @@ const InfoCard = ({ icon, label, value }) => (
       </div>
       <div className="min-w-0">
         <p className="text-xs font-semibold uppercase tracking-wider text-gray-500">{label}</p>
-        <p className="mt-1 text-sm font-semibold text-gray-900 break-words">{value || 'N/A'}</p>
+        <p className="mt-1 text-sm font-semibold text-gray-900 wrap-break-word">{value || 'N/A'}</p>
       </div>
     </div>
   </div>
