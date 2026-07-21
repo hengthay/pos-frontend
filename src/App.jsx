@@ -36,6 +36,7 @@ import ExpenseDetail from './components/Expenses/ExpenseDetail'
 import Payment from './pages/Payment'
 import PaymentUpdate from './components/Payment/PaymentUpdate'
 import PaymentDetail from './components/Payment/PaymentDetail'
+import Report from './pages/Report'
 
 const App = () => {
   return (
@@ -75,6 +76,7 @@ const App = () => {
           <Route path='/payments' element={<Payment />}/>
           <Route path='/payments/:id/edit' element={<PaymentUpdate />}/>
           <Route path='/payments/:id/view' element={<PaymentDetail />}/>
+          <Route path='/reports' element={<Report />} />
         </Route>
       </Route>
       <Route path='/login' element={<Login />}/>

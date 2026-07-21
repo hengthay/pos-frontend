@@ -10,6 +10,7 @@ import purchaseReducer from "../feature/purchases/purchaseSlice";
 import supplierReducer from "../feature/suppliers/supplierSlice";
 import expenseReducer from "../feature/expenses/expenseSlice";
 import paymentReducer from "../feature/payments/paymentSlice";
+import reportReducer from "../feature/reports/reportSlice";
 
 const store = configureStore({
   reducer: {
@@ -24,6 +25,7 @@ const store = configureStore({
     suppliers: supplierReducer,
     expenses: expenseReducer,
     payments: paymentReducer,
+    reports: reportReducer
   }
 });
 
